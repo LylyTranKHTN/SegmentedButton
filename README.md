@@ -9,3 +9,6 @@ This repository use storybook as a documentation and a development environment. 
 
 The storybook documentation as http://localhost:6006/
 
+## Run eslint
+
+`npm run lint`

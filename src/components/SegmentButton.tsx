@@ -1,14 +1,13 @@
-import React from "react";
-
 interface SegmentButtonProps {
-
+  buttons: {
+    label: string;
+    id: string;
+    disabled?: boolean;
+  }[];
 }
-const SegmentButton: React.FC<SegmentButtonProps> = ({ }) => {
-    return (
-        <button>
-            test
-        </button>
-    );
-}
+const SegmentButton = ({ buttons }: SegmentButtonProps) => {
+  console.log(buttons);
+  return <button>test</button>;
+};
 
 export default SegmentButton;
