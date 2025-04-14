@@ -3,6 +3,7 @@ import resolve from "@rollup/plugin-node-resolve";
 import typescript from "@rollup/plugin-typescript";
 import postcss from "rollup-plugin-postcss";
 import dts from "rollup-plugin-dts";
+import svg from "rollup-plugin-svg";
 import packageJson from "./package.json" assert { type: "json" };
 
 export default [
@@ -28,13 +29,18 @@ export default [
         tsconfig: "./tsconfig.json",
         exclude: ["**/*.test.tsx", "**/*.test.ts", "**/*.stories.ts"],
       }),
-      postcss({ extensions: [".css"], inject: true, extract: false }),
+      postcss({
+        extensions: [".css", ".scss"],
+        inject: true,
+        extract: false,
+        to: "dist/main.css",
+      }),
     ],
   },
   {
     input: "dist/esm/types/index.d.ts",
     output: [{ file: "dist/index.d.ts", format: "esm" }],
-    plugins: [dts()],
-    external: [/\.css$/],
+    plugins: [dts(), svg()],
+    external: [/\.(css|scss)$/],
   },
 ];
