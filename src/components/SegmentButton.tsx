@@ -1,4 +1,4 @@
-interface SegmentButtonProps {
+export interface SegmentButtonProps {
   buttons: {
     label: string;
     id: string;

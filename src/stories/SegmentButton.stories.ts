@@ -1,10 +1,12 @@
-import SegmentButton from "../components/SegmentButton";
+import SegmentButton, { SegmentButtonProps } from "../components/SegmentButton";
 import type { Meta, StoryObj } from "@storybook/react";
 
-const meta = {
+const meta: Meta<SegmentButtonProps> = {
   title: "Core/SegmentButton",
   component: SegmentButton,
-  parameters: {},
+  parameters: {
+    buttons: []
+  },
   tags: ["autodocs"],
 } satisfies Meta<typeof SegmentButton>;
 
