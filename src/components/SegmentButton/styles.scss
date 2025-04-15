@@ -26,25 +26,31 @@ $font-color-selected: #42766d;
     padding: 5px 14px;
     background: $bg-default;
     border: thin solid $border-color;
+    border-right: none;
 
     font-family: Lato, sans-serif;
     font-weight: 400;
     font-size: 12px;
     line-height: 130%;
     letter-spacing: 0%;
+    color: $font-color;
 
     &:hover {
       background: $bg-hover;
     }
 
     &:focus {
-      border-color: $border-color-focus;
+      border: thin solid $border-color-focus;
     }
 
     &:disabled {
       color: $font-color-disabled;
       background: $bg-disabled;
     }
+  }
+
+  &-item:last-child {
+    border-right: thin solid $border-color;
   }
 
   .segment-button-item-selected {
