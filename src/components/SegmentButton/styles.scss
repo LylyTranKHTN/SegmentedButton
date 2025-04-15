@@ -1,0 +1,60 @@
+$bg-default: #ffffff;
+$bg-hover: #f5f5f5;
+$bg-selected: #ecf1f0;
+$bg-disabled: #fafafa;
+
+$border-color: #c3c3c3;
+$border-color-focus: #2f322f;
+
+$font-color: #2f322f;
+$font-color-disabled: #999999;
+$font-color-selected: #42766d;
+
+@font-face {
+  font-family: "Lato";
+  src: url("../../assests/Lato/fonts/Lato-Regular.eot");
+  src:
+    url("../../assests/Lato/fonts/Lato-Regular.eot") format("embedded-opentype"),
+    url("../../assests/Lato/fonts/Lato-Regular.woff") format("woff"),
+    url("../../assests/Lato/fonts/Lato-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.segment-button {
+  &-item {
+    padding: 5px 14px;
+    background: $bg-default;
+    border: thin solid $border-color;
+
+    font-family: Lato, sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 130%;
+    letter-spacing: 0%;
+
+    &:hover {
+      background: $bg-hover;
+    }
+
+    &:focus {
+      border-color: $border-color-focus;
+    }
+
+    &:disabled {
+      color: $font-color-disabled;
+      background: $bg-disabled;
+    }
+  }
+
+  .segment-button-item-selected {
+    background: $bg-selected;
+    padding: 5px 12px;
+
+    color: $font-color-selected;
+
+    img {
+      padding-right: 12px;
+    }
+  }
+}

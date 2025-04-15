@@ -1,5 +1,5 @@
-import { useState } from "react";
-import Button from "../Button";
+import { useState, memo, useCallback, useEffect } from "react";
+import Button from "./Button";
 import "./styles.scss";
 
 export interface SegmentButtonProps {
@@ -9,36 +9,38 @@ export interface SegmentButtonProps {
     disabled?: boolean;
   }[];
   multiple?: boolean;
-  onChange?: (selected: string[]) => void;
+  onChange: (selected: string[]) => void;
 }
 const SegmentButton = (props: SegmentButtonProps) => {
   const { buttons, multiple = false, onChange = () => {} } = props;
 
   const [selectedButtons, setSelectedButtons] = useState<string[]>([]);
 
-  const handleClickButton = (id: string) => {
-    if (multiple) {
-      if (selectedButtons.includes(id)) {
-        setSelectedButtons((prev) => prev.filter((item) => item !== id));
-      } else {
-        setSelectedButtons((prev) => [...prev, id]);
-      }
-    } else {
-      setSelectedButtons([id]);
-    }
+  useEffect(() => {
     onChange(selectedButtons);
-  };
+  }, [selectedButtons]);
 
-  if (!buttons || buttons.length === 0) {
-    return null;
-  }
+  const handleClickButton = useCallback(
+    (id: string) => {
+      if (multiple) {
+        if (selectedButtons.includes(id)) {
+          setSelectedButtons((prev) => prev.filter((item) => item !== id));
+        } else {
+          setSelectedButtons((prev) => [...prev, id]);
+        }
+      } else {
+        setSelectedButtons([id]);
+      }
+    },
+    [selectedButtons, onChange, multiple]
+  );
 
   return (
     <div className="segment-button">
-      {buttons.map((button) => (
+      {buttons?.map((button) => (
         <Button
           key={button.id}
-          onClick={() => handleClickButton(button.id)}
+          onClick={handleClickButton}
           selected={selectedButtons.includes(button.id)}
           {...button}
         ></Button>
@@ -47,4 +49,4 @@ const SegmentButton = (props: SegmentButtonProps) => {
   );
 };
 
-export default SegmentButton;
+export default memo(SegmentButton);

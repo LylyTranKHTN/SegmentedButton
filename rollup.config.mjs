@@ -35,12 +35,13 @@ export default [
         extract: false,
         to: "dist/main.css",
       }),
+      svg(),
     ],
   },
   {
     input: "dist/esm/types/index.d.ts",
     output: [{ file: "dist/index.d.ts", format: "esm" }],
-    plugins: [dts(), svg()],
+    plugins: [dts()],
     external: [/\.(css|scss)$/],
   },
 ];

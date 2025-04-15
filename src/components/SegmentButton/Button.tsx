@@ -1,24 +1,29 @@
-import "./styles.scss";
+import React from "react";
 import selectedImg from "../../assests/selected.svg";
+import "./styles.scss";
 
 export interface ButtonProps {
   id: string;
   label: string;
-  onClick: () => void;
+  onClick: (id: string) => void;
   disabled?: boolean;
   selected: boolean;
 }
 
 const Button = ({ id, label, onClick, disabled, selected }: ButtonProps) => {
+  const handleClick = () => {
+    onClick(id);
+  };
+
   return (
     <button
       id={id}
-      className={
-        selected ? "segment-button-item-selected" : "segment-button-item"
-      }
-      onClick={onClick}
+      className={`segment-button-item ${
+        selected ? "segment-button-item-selected" : ""
+      }`}
+      onClick={handleClick}
       disabled={disabled || false}
-      aria-label={`${label} ${selected && "selected"}`}
+      aria-label={`${label} ${selected ? "selected" : ""}`}
     >
       {selected && (
         <span role="img" aria-label="selected item">
@@ -30,4 +35,4 @@ const Button = ({ id, label, onClick, disabled, selected }: ButtonProps) => {
   );
 };
 
-export default Button;
+export default React.memo(Button);
