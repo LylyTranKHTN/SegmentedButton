@@ -9,9 +9,9 @@ export interface SegmentButtonProps {
     disabled?: boolean;
   }[];
   multiple?: boolean;
-  onChange: (selected: string[]) => void;
+  onChange?: (selected: string[]) => void;
 }
-const SegmentButton = (props: SegmentButtonProps) => {
+const SegmentButton = memo((props: SegmentButtonProps) => {
   const { buttons, multiple = false, onChange = () => {} } = props;
 
   const [selectedButtons, setSelectedButtons] = useState<string[]>([]);
@@ -47,6 +47,8 @@ const SegmentButton = (props: SegmentButtonProps) => {
       ))}
     </div>
   );
-};
+});
 
-export default memo(SegmentButton);
+SegmentButton.displayName = "SegmentButton";
+
+export default SegmentButton;

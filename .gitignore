@@ -3,4 +3,5 @@ dist
 coverage
 
 *storybook.log
+storybook-static
 *stories/examples
