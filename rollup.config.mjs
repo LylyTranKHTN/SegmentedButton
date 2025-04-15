@@ -4,42 +4,68 @@ import typescript from "@rollup/plugin-typescript";
 import postcss from "rollup-plugin-postcss";
 import dts from "rollup-plugin-dts";
 import svg from "rollup-plugin-svg";
+import terser from "@rollup/plugin-terser";
+import typescriptEngine from "typescript";
+import external from "rollup-plugin-peer-deps-external";
+
 import packageJson from "./package.json" assert { type: "json" };
 
 export default [
   {
-    preserveModules: true,
     input: "src/index.ts",
     output: [
       {
         file: packageJson.main,
         format: "cjs",
         sourcemap: true,
+        exports: "named",
+        name: packageJson.name,
       },
       {
         file: packageJson.module,
-        format: "esm",
+        format: "es",
+        exports: "named",
         sourcemap: true,
       },
     ],
     plugins: [
-      resolve(),
-      commonjs(),
-      typescript({
-        tsconfig: "./tsconfig.json",
-        exclude: ["**/*.test.tsx", "**/*.test.ts", "**/*.stories.ts"],
-      }),
       postcss({
         extensions: [".css", ".scss"],
         inject: true,
         extract: false,
-        to: "dist/main.css",
+        minimize: true,
       }),
-      svg(),
+      svg({ base64: true }),
+      resolve({
+        moduleDirectories: ["node_modules"],
+      }),
+      external({ includeDependencies: true }),
+      commonjs(),
+      typescript({
+        tsconfig: "./tsconfig.json",
+        typescript: typescriptEngine,
+        exclude: [
+          "coverage",
+          ".storybook",
+          "storybook-static",
+          "dist",
+          "node_modules/**",
+          "*.cjs",
+          "*.mjs",
+          "**/__tests__",
+          "**/*.test.ts+(|x)",
+          "**/*.mdx",
+          "**/*.stories.ts+(|x)",
+          "**/*.stories.js+(|x)",
+          "vitest.config.ts",
+        ],
+      }),
+      terser(),
     ],
+    external: ["react", "react-dom"],
   },
   {
-    input: "dist/esm/types/index.d.ts",
+    input: "dist/types/index.d.ts",
     output: [{ file: "dist/index.d.ts", format: "esm" }],
     plugins: [dts()],
     external: [/\.(css|scss)$/],
